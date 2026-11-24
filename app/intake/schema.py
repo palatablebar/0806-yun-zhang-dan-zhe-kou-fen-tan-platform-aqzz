@@ -5,6 +5,7 @@ from app.intake.numeric import quantity
 from app.spec import COLUMNS, KINDS
 
 HEADER = ("record", "case", "kind", *COLUMNS, "note")
+IDENTIFIER = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,35}")
 
 
 def record(values):
@@ -13,7 +14,7 @@ def record(values):
     row = dict(zip(HEADER, values))
     for key in ("record", "case"):
         row[key] = row[key].strip()
-        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,35}", row[key]):
+        if not IDENTIFIER.fullmatch(row[key]):
             raise DomainIssue("BAD_IDENTIFIER")
     if row["kind"] not in KINDS:
         raise DomainIssue("UNKNOWN_KIND")

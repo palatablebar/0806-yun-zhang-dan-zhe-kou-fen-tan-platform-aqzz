@@ -7,6 +7,31 @@ export function badge(status) {
   return element('span', labels[status] || status, {class:'badge', 'data-result':status, title: status});
 }
 
+export function supplement(items) {
+  const table = document.querySelector('#supplement-rows');
+  const label = document.querySelector('#supplement-counts');
+  table.replaceChildren();
+  const head = element('tr');
+  label.textContent = items.length ? `${items.length} 组整体待补` : '没有来源不全的业务组';
+  head.append(...['业务分组', '原始记录键', '源行', '原因码'].map(title=>element('th',title,{scope:'col'})));
+  const body = table.createTBody();
+  for (const item of items) {
+    const tr = body.insertRow();
+    tr.append(
+      element('td', item.case ?? '未归属'),
+      element('td', item.records.join(' · ')),
+      element('td', item.lines.join(', ')),
+      element('td', Object.entries(item.reasons).map(([code,count])=>`${code}×${count}`).join(' · '))
+    );
+  }
+  if (!items.length) {
+    const cell = body.insertRow().insertCell();
+    cell.colSpan = 4;
+    cell.textContent = '当前批次没有待补业务组';
+  }
+  table.createTHead().append(head);
+}
+
 export function snapshot(report, selected, stage) {
   const stats = report.intake;
   document.querySelector('[data-metric="input"]').textContent = stats.input;
@@ -39,7 +64,9 @@ export function snapshot(report, selected, stage) {
   document.querySelector('#detail-title').textContent = picked ? `分组 ${picked.case}` : '采信摘要';
   const shown = picked ? picked.measure?.evidence ?? picked.prep?.details ?? {原因:picked.status} : stats.reasons;
   document.querySelector('#detail').textContent = pretty(shown);
-  document.querySelector('#counts').textContent = report.balance ? `行数 ${report.balance.accounted}/${report.balance.input} · ${report.balance.ready} 组通过` : `采信 ${stats.accepted} 行 · 隔离 ${stats.rejected} 行`;
+  document.querySelector('#counts').textContent = report.balance
+    ? `行数 ${report.balance.accounted}/${report.balance.input} · ${report.balance.ready} 组通过${report.balance.withheld_groups ? ` · ${report.balance.withheld_groups} 组待补` : ''}`
+    : `采信 ${stats.accepted} 行 · 隔离 ${stats.rejected} 行`;
 }
 
 export function history(items, active) {

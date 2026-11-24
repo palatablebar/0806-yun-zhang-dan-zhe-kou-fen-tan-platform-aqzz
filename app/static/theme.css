@@ -6,7 +6,7 @@
   color-scheme:light; }
 * {box-sizing:border-box} [hidden] {display:none!important}
 body.ledger {margin:0;background:var(--bg);color:var(--ink);font:var(--size)/1.55 var(--font-ui)}
-.ledger .desk {display:grid;grid-template-areas:"mast mast" "source source" "stages stages" "kpis kpis" "results inspection" "results chart" "archive archive" "statusbar statusbar";grid-template-columns:1.55fr 1fr;gap:var(--gap);margin:auto;padding:clamp(14px,3vw,42px);max-width:1570px}
+.ledger .desk {display:grid;grid-template-areas:"mast mast" "source source" "stages stages" "kpis kpis" "results inspection" "results chart" "supplement supplement" "archive archive" "statusbar statusbar";grid-template-columns:1.55fr 1fr;gap:var(--gap);margin:auto;padding:clamp(14px,3vw,42px);max-width:1570px}
 .ledger .mast {grid-area:mast;background:var(--surface);padding:var(--pad);min-width:0}
 .ledger .mast h1 {font:700 clamp(26px,4vw,52px)/1.1 var(--font-display);margin:0;overflow-wrap:anywhere}
 .ledger .role {color:var(--accent);margin:0 0 7px;font-weight:700}
@@ -24,7 +24,7 @@ body.ledger {margin:0;background:var(--bg);color:var(--ink);font:var(--size)/1.5
 .ledger .metric {background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:var(--pad);display:grid;align-content:center}
 .ledger .metric strong {font:600 clamp(22px,4vw,43px)/1.05 var(--font-num);font-variant-numeric:tabular-nums}
 .ledger .panel {background:var(--surface);padding:var(--pad);min-width:0;border:1px solid var(--line);border-radius:var(--radius)}
-.ledger .results {grid-area:results} .ledger .chart {grid-area:chart} .ledger .inspection {grid-area:inspection} .ledger .archive {grid-area:archive}
+.ledger .results {grid-area:results} .ledger .chart {grid-area:chart} .ledger .inspection {grid-area:inspection} .ledger .archive {grid-area:archive} .ledger .supplement {grid-area:supplement}
 .ledger h2 {font-size:16px;margin:0 0 10px} .ledger .panel-head {display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
 .ledger #counts,.ledger #run-status {color:var(--sub);overflow-wrap:anywhere}
 .ledger .scroll {overflow:auto;max-height:270px}
@@ -41,8 +41,8 @@ body.ledger {margin:0;background:var(--bg);color:var(--ink);font:var(--size)/1.5
 .ledger .mast {border-block: 3px double var(--accent)}
 .ledger .results tr:nth-child(even) {background:var(--bg)}
 .ledger .badge{border-bottom:1px dashed}
-@media(max-width:1120px) { .ledger .desk {grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"mast mast" "source source" "stages stages" "kpis kpis" "results results" "chart inspection" "archive archive" "statusbar statusbar"} }
-@media(max-width:630px) { .ledger .desk {grid-template-columns:minmax(0,1fr);grid-template-areas:"mast" "source" "stages" "kpis" "chart" "results" "inspection" "archive" "statusbar"} .ledger .kpis {grid-template-columns:repeat(2,minmax(0,1fr))} .ledger .chart #visual {display:block!important} .ledger .stages button {width:auto} }
+@media(max-width:1120px) { .ledger .desk {grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"mast mast" "source source" "stages stages" "kpis kpis" "results results" "chart inspection" "supplement supplement" "archive archive" "statusbar statusbar"} }
+@media(max-width:630px) { .ledger .desk {grid-template-columns:minmax(0,1fr);grid-template-areas:"mast" "source" "stages" "kpis" "chart" "results" "supplement" "inspection" "archive" "statusbar"} .ledger .kpis {grid-template-columns:repeat(2,minmax(0,1fr))} .ledger .chart #visual {display:block!important} .ledger .stages button {width:auto} }
 @media print { .ledger .source,.ledger .stages,.ledger .archive,.ledger .statusbar {display:none} .ledger .desk {display:block} }
 
 .mark-piece {background:var(--accent);color:var(--surface);min-width:0}

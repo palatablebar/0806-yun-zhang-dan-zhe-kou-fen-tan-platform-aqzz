@@ -7,6 +7,7 @@ def artifact(run):
         "manifest": run["report"]["manifest"],
         "balance": run["report"]["balance"],
         "cases": run["report"]["cases"],
+        "supplement": run["report"].get("supplement", []),
         "intake": run["report"]["intake"],
         "review": {key: run[key] for key in ("status", "revision", "note", "reviewed")},
     }

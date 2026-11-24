@@ -26,6 +26,12 @@
   <div class="scroll"><table id="rows" aria-label="阶段结果"></table></div>
 </section>
 {% endmacro %}
+{% macro supplement() %}
+<section class="panel supplement" aria-labelledby="supplement-title">
+  <div class="panel-head"><h2 id="supplement-title">待补清单</h2><span id="supplement-counts"></span></div>
+  <div class="scroll"><table id="supplement-rows" aria-label="待补业务组"></table></div>
+</section>
+{% endmacro %}
 {% macro visual(p) %}
 <section class="panel chart" aria-label="结果图"><h2>{{ p.chart }}</h2><div id="visual"></div></section>
 {% endmacro %}

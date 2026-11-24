@@ -6,4 +6,6 @@
 
 `PATCH /api/runs/<id>` 接收 `revision`、`status` 和 `note`。状态使用 `APPROVED` 或 `HELD`。冲突返回 409，客户端读取新版本后重试。
 
-`GET /api/runs/<id>/evidence` 下载内含运行清单、行号隔离、业务证据和复核信息的 JSON。
+`GET /api/runs/<id>/evidence` 下载内含运行清单、行号隔离、业务证据、待补清单和复核信息的 JSON。
+
+运行报告中的 `supplement` 是待补清单：来源不全的业务组整体列在这里，不进入 `cases`。每项含 `case`、`status`（`SOURCE_INCOMPLETE`）、`records`（该组全部原始记录键）、`rejected_records`、`accepted_records`、`lines`、`reasons`、`detail` 与 `withheld_discount_cents`。`balance.released` 列出本批可签发的完整组，`balance.withheld` 列出本批待补组；两者互不影响。

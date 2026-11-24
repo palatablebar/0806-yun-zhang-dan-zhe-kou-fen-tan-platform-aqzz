@@ -1,5 +1,5 @@
 import {request} from './client.js';
-import {snapshot, history} from './view.js';
+import {snapshot, history, supplement} from './view.js';
 import {visualize} from './plots.js';
 
 const form = document.querySelector('#source');
@@ -27,6 +27,7 @@ function announce(text, failure = false) {
 function draw() {
   if (!report) return;
   snapshot(report, selected, stage);
+  supplement(report.supplement || []);
   visualize(report, selected);
   for (const button of stages) button.setAttribute('aria-pressed',String(button.dataset.stage===stage));
   document.querySelector('#panel-title').textContent = stages.find(button => button.dataset.stage===stage)?.textContent || '运行对账';

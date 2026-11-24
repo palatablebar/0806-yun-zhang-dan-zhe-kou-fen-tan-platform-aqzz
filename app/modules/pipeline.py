@@ -5,6 +5,7 @@ from app.modules.grouping import case_groups
 from app.modules.policy import policy
 from app.modules.prepare import prepare
 from app.modules.reconcile import balance
+from app.modules.supplement import settle
 
 
 def evaluate(rows, stage):
@@ -26,11 +27,15 @@ def evaluate(rows, stage):
 
 def run(data, stage=5):
     intake = inspect(data)
-    output = {"intake": {k: v for k, v in intake.items() if k != "rows"}}
+    supplement, rows = settle(intake["rows"], intake["isolation"])
+    output = {
+        "intake": {k: v for k, v in intake.items() if k != "rows"},
+        "supplement": supplement,
+    }
     if stage == 1:
         return output
-    cases = [evaluate(rows, stage) for _, rows in case_groups(intake["rows"])]
+    cases = [evaluate(group, stage) for _, group in case_groups(rows)]
     output["cases"] = cases
     if stage >= 5:
-        output["balance"] = balance(intake, cases)
+        output["balance"] = balance(intake, cases, supplement)
     return output
